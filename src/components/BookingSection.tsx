@@ -86,7 +86,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
 
   const handleOpenTelegram = () => {
     const encoded = encodeURIComponent(bookingMessage);
-    window.open(`https://t.me/salon_peremena_nails?text=${encoded}`, '_blank');
+    window.open(`https://t.me/veronya535?text=${encoded}`, '_blank');
   };
 
   const handleDirectSubmit = (e: React.FormEvent) => {
