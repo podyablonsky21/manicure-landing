@@ -70,7 +70,7 @@ export const ContactsSection: React.FC = () => {
               {/* Direct Messenger Links */}
               <div className="pt-4 border-t border-white/[0.08] flex flex-wrap gap-3">
                 <a
-                  href="https://wa.me/79158850969"
+                 href="https://t.me/veronya535"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-4 py-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-xs text-white flex items-center gap-2 transition-colors cursor-pointer"
