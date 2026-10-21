@@ -80,7 +80,7 @@ export const ContactsSection: React.FC = () => {
                 </a>
 
                 <a
-                  href="https://t.me/salon_peremena_nails"
+                href="https://t.me/veronya535"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-4 py-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-xs text-white flex items-center gap-2 transition-colors cursor-pointer"
