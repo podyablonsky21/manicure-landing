@@ -8,10 +8,10 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-white/[0.06] text-left">
           {/* Brand info */}
           <div className="md:col-span-2 space-y-3">
-            <div className="text-base font-serif tracking-widest text-white flex items-center gap-2">
-              <span className="font-semibold tracking-[0.2em] text-[#F5DFCB]">ПЕРЕМЕНА</span>
-              <span className="text-[#E5C4A8]/60 text-xs">·</span>
-              <span className="text-xs tracking-[0.18em] text-[#E5C4A8] uppercase font-sans">ВЕРОНИКА</span>
+            <div className="flex items-center gap-2.5">
+              <span className="font-display text-base font-normal tracking-[0.28em] text-[#F5DFCB]">ПЕРЕМЕНА</span>
+              <span className="text-[#E5C4A8]/40 text-xs select-none">·</span>
+              <span className="font-sans text-[11px] tracking-[0.32em] text-[#E5C4A8] uppercase font-light">ВЕРОНИКА</span>
             </div>
             <p className="text-neutral-400 text-xs max-w-md font-light leading-relaxed">
               Премиальная эстетика ногтевого сервиса, авторские техники бережного укрепления и строжайшая 3-ступенчатая медицинская стерилизация.
@@ -39,18 +39,18 @@ export const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
+                <a href="#booking" className="hover:text-[#E5C4A8] transition-colors">
+                  Онлайн-запись
+                </a>
+              </li>
+              <li>
                 <a href="#sterility" className="hover:text-[#E5C4A8] transition-colors">
                   3 этапа стерилизации
                 </a>
               </li>
               <li>
-                <a href="#gallery" className="hover:text-[#E5C4A8] transition-colors">
-                  Галерея работ
-                </a>
-              </li>
-              <li>
-                <a href="#booking" className="hover:text-[#E5C4A8] transition-colors">
-                  Онлайн-запись
+                <a href="#contacts" className="hover:text-[#E5C4A8] transition-colors">
+                  Локация и контакты
                 </a>
               </li>
             </ul>

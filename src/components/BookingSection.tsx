@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { SERVICES, ADDONS, TIME_SLOTS } from '../data/salonData';
 import { Calendar as CalendarIcon, Clock, Send, MessageCircle, CheckCircle2, Sparkles, User, Phone, FileText } from 'lucide-react';
+import { motion } from 'motion/react';
 
 interface BookingSectionProps {
   selectedServiceId: string;
@@ -86,7 +87,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
 
   const handleOpenTelegram = () => {
     const encoded = encodeURIComponent(bookingMessage);
-    window.open(`https://t.me/veronya535?text=${encoded}`, '_blank');
+    window.open(`https://t.me/salon_peremena_nails?text=${encoded}`, '_blank');
   };
 
   const handleDirectSubmit = (e: React.FormEvent) => {
@@ -99,30 +100,59 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
   };
 
   return (
-    <section id="booking" className="py-24 relative overflow-hidden bg-[#0D0D11]">
+    <section id="booking" className="pt-2 pb-12 sm:pt-4 sm:pb-16 relative overflow-hidden bg-[#0D0D11] scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-[#E5C4A8]/20 mb-4">
+        {/* Section Header with Motion Fade-in & Decorative Line */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center max-w-2xl mx-auto mb-8 sm:mb-10"
+        >
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-[#E5C4A8]/20 mb-3">
             <CalendarIcon className="w-3.5 h-3.5 text-[#E5C4A8]" />
             <span className="text-xs uppercase tracking-widest text-[#F5DFCB] font-medium">
               Онлайн-расписание
             </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-serif text-white font-light tracking-tight mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-white font-light tracking-tight mb-2 sm:mb-3">
             Запись к мастеру Веронике
           </h2>
-          <p className="text-neutral-400 text-sm sm:text-base font-light">
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="w-24 h-[1.5px] mx-auto bg-gradient-to-r from-transparent via-[#E5C4A8] to-transparent mb-3"
+          />
+          <p className="text-neutral-400 text-xs sm:text-sm font-light">
             Выберите желаемую дату, время и комплекс. Заявка мгновенно передается мастеру в личный чат без ожидания звонка оператора.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <motion.div
+          initial={{ opacity: 0, y: 25, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.65, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start"
+        >
           {/* Main Booking Controls (Left 7 Cols) */}
-          <div className="lg:col-span-7 space-y-8">
+          <div className="lg:col-span-7 space-y-5">
             {/* 1. Date Selector */}
-            <div className="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/[0.08] backdrop-blur-md text-left">
-              <div className="flex items-center justify-between mb-4">
+            <div className="p-5 sm:p-6 rounded-2xl bg-neutral-900/60 border border-white/10 hover:border-[#E5C4A8]/50 hover:shadow-[0_0_30px_rgba(229,196,168,0.18)] transition-all duration-300 backdrop-blur-md text-left relative overflow-hidden group">
+              {/* Mirror sheen sweep */}
+              <motion.div
+                initial={{ x: '-150%', opacity: 0 }}
+                whileInView={{ x: '180%', opacity: [0, 0.7, 0.7, 0] }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, delay: 0.15, ease: [0.25, 1, 0.5, 1] }}
+                className="absolute inset-0 -skew-x-25 bg-gradient-to-r from-transparent via-white/[0.1] to-transparent pointer-events-none z-20"
+              />
+              <div className="absolute inset-0 -translate-x-[200%] -skew-x-25 group-hover:translate-x-[250%] transition-transform duration-1000 ease-out bg-gradient-to-r from-transparent via-[#E5C4A8]/20 to-transparent pointer-events-none z-20" />
+
+              <div className="flex items-center justify-between mb-4 relative z-10">
                 <span className="text-xs uppercase tracking-wider text-[#E5C4A8] font-semibold">
                   1. Выберите дату визита
                 </span>
@@ -132,18 +162,20 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
               </div>
 
               {/* Horizontal Scrollable Date Carousel */}
-              <div className="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none">
+              <div className="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none relative z-10">
                 {availableDates.map((item) => {
                   const isSelected = selectedDate === item.fullDate;
                   return (
-                    <button
+                    <motion.button
+                      whileHover={{ scale: 1.04 }}
+                      whileTap={{ scale: 0.96 }}
                       key={item.fullDate}
                       type="button"
                       onClick={() => setSelectedDate(item.fullDate)}
-                      className={`flex flex-col items-center justify-center min-w-[70px] py-3 px-2 rounded-xl transition-all cursor-pointer ${
+                      className={`flex flex-col items-center justify-center min-w-[70px] py-3 px-2 rounded-xl transition-all cursor-pointer backdrop-blur-sm ${
                         isSelected
-                          ? 'bg-[#E5C4A8] text-[#0D0D11] shadow-[0_0_20px_rgba(229,196,168,0.4)] scale-105'
-                          : 'bg-white/[0.04] text-neutral-300 hover:bg-white/[0.08] border border-white/[0.06]'
+                          ? 'bg-[#E5C4A8] text-[#0D0D11] shadow-[0_0_20px_rgba(229,196,168,0.45)] scale-105 font-medium'
+                          : 'bg-neutral-900/50 text-neutral-300 hover:bg-neutral-800/80 hover:border-[#E5C4A8]/50 hover:shadow-[0_0_15px_rgba(229,196,168,0.15)] border border-white/10'
                       }`}
                     >
                       <span className="text-[10px] uppercase font-medium opacity-80">
@@ -155,15 +187,25 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
                       <span className="text-[10px] opacity-75">
                         {item.monthName}
                       </span>
-                    </button>
+                    </motion.button>
                   );
                 })}
               </div>
             </div>
 
-            {/* 2. Time Slot Selector */}
-            <div className="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/[0.08] backdrop-blur-md text-left">
-              <div className="flex items-center justify-between mb-4">
+            {/* 2. Time Slot Selector with Golden Glow on hover */}
+            <div className="p-6 sm:p-8 rounded-2xl bg-neutral-900/60 border border-white/10 hover:border-[#E5C4A8]/50 hover:shadow-[0_0_30px_rgba(229,196,168,0.18)] transition-all duration-300 backdrop-blur-md text-left relative overflow-hidden group">
+              {/* Mirror sheen sweep */}
+              <motion.div
+                initial={{ x: '-150%', opacity: 0 }}
+                whileInView={{ x: '180%', opacity: [0, 0.7, 0.7, 0] }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, delay: 0.25, ease: [0.25, 1, 0.5, 1] }}
+                className="absolute inset-0 -skew-x-25 bg-gradient-to-r from-transparent via-white/[0.1] to-transparent pointer-events-none z-20"
+              />
+              <div className="absolute inset-0 -translate-x-[200%] -skew-x-25 group-hover:translate-x-[250%] transition-transform duration-1000 ease-out bg-gradient-to-r from-transparent via-[#E5C4A8]/20 to-transparent pointer-events-none z-20" />
+
+              <div className="flex items-center justify-between mb-4 relative z-10">
                 <span className="text-xs uppercase tracking-wider text-[#E5C4A8] font-semibold">
                   2. Выберите удобное время
                 </span>
@@ -172,18 +214,20 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 relative z-10">
                 {TIME_SLOTS.map((slot) => {
                   const isSelected = selectedTime === slot.time;
                   return (
-                    <button
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                       key={slot.time}
                       type="button"
                       onClick={() => setSelectedTime(slot.time)}
-                      className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer ${
+                      className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer backdrop-blur-sm ${
                         isSelected
-                          ? 'bg-[#E5C4A8]/15 border-[#E5C4A8] shadow-[0_0_15px_rgba(229,196,168,0.2)]'
-                          : 'bg-white/[0.03] border-white/[0.06] hover:border-white/20'
+                          ? 'bg-[#E5C4A8]/15 border-[#E5C4A8] shadow-[0_0_18px_rgba(229,196,168,0.25)]'
+                          : 'bg-neutral-900/50 border-white/10 hover:border-[#E5C4A8]/50 hover:shadow-[0_0_15px_rgba(229,196,168,0.12)] hover:bg-neutral-800/80'
                       }`}
                     >
                       <div className="text-sm font-semibold text-white tabular-nums flex items-center justify-between">
@@ -193,19 +237,29 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
                       <div className="text-[10px] text-neutral-400 mt-1">
                         {slot.label}
                       </div>
-                    </button>
+                    </motion.button>
                   );
                 })}
               </div>
             </div>
 
             {/* 3. Client Contact Inputs */}
-            <form onSubmit={handleDirectSubmit} className="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/[0.08] backdrop-blur-md text-left space-y-4">
-              <div className="text-xs uppercase tracking-wider text-[#E5C4A8] font-semibold mb-2">
+            <form onSubmit={handleDirectSubmit} className="p-6 sm:p-8 rounded-2xl bg-neutral-900/60 border border-white/10 hover:border-[#E5C4A8]/40 hover:shadow-[0_0_30px_rgba(229,196,168,0.18)] transition-all duration-300 backdrop-blur-md text-left space-y-4 relative overflow-hidden group">
+              {/* Mirror sheen sweep */}
+              <motion.div
+                initial={{ x: '-150%', opacity: 0 }}
+                whileInView={{ x: '180%', opacity: [0, 0.7, 0.7, 0] }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, delay: 0.35, ease: [0.25, 1, 0.5, 1] }}
+                className="absolute inset-0 -skew-x-25 bg-gradient-to-r from-transparent via-white/[0.1] to-transparent pointer-events-none z-20"
+              />
+              <div className="absolute inset-0 -translate-x-[200%] -skew-x-25 group-hover:translate-x-[250%] transition-transform duration-1000 ease-out bg-gradient-to-r from-transparent via-[#E5C4A8]/20 to-transparent pointer-events-none z-20" />
+
+              <div className="text-xs uppercase tracking-wider text-[#E5C4A8] font-semibold mb-2 relative z-10">
                 3. Ваши контактные данные
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
                 <div>
                   <label className="block text-xs text-neutral-300 font-light mb-1.5">
                     Ваше имя *
@@ -218,7 +272,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
                       placeholder="Например, Екатерина"
                       value={clientName}
                       onChange={(e) => setClientName(e.target.value)}
-                      className="w-full bg-[#14141E] border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#E5C4A8] transition-colors"
+                      className="w-full bg-neutral-950/60 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#E5C4A8] transition-colors"
                     />
                   </div>
                 </div>
@@ -235,13 +289,13 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
                       placeholder="+7 (___) ___-__-__"
                       value={clientPhone}
                       onChange={handlePhoneChange}
-                      className="w-full bg-[#14141E] border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#E5C4A8] transition-colors tabular-nums"
+                      className="w-full bg-neutral-950/60 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#E5C4A8] transition-colors tabular-nums"
                     />
                   </div>
                 </div>
               </div>
 
-              <div>
+              <div className="relative z-10">
                 <label className="block text-xs text-neutral-300 font-light mb-1.5">
                   Пожелания по дизайну или состоянию ногтей (необязательно)
                 </label>
@@ -252,7 +306,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
                     placeholder="Например: нужен ремонт одного сломанного ногтя, хочу классический френч..."
                     value={clientNotes}
                     onChange={(e) => setClientNotes(e.target.value)}
-                    className="w-full bg-[#14141E] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-[#E5C4A8] transition-colors resize-none"
+                    className="w-full bg-neutral-950/60 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-[#E5C4A8] transition-colors resize-none"
                   />
                 </div>
               </div>
@@ -261,12 +315,25 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
 
           {/* Live Order Summary & Messenger Direct Triggers (Right 5 Cols) */}
           <div className="lg:col-span-5 sticky top-24">
-            <div className="p-7 sm:p-8 rounded-3xl bg-gradient-to-b from-[#161622] to-[#12121A] border border-[#E5C4A8]/30 shadow-2xl text-left">
-              <div className="flex items-center justify-between pb-4 border-b border-white/10">
+            <motion.div
+              whileHover={{ y: -2 }}
+              className="p-7 sm:p-8 rounded-3xl bg-neutral-900/70 backdrop-blur-md border border-[#E5C4A8]/40 hover:border-[#E5C4A8]/70 hover:shadow-[0_12px_45px_rgba(229,196,168,0.22)] shadow-[0_10px_40px_rgba(0,0,0,0.6)] text-left relative overflow-hidden group"
+            >
+              {/* Mirror sheen sweep for order summary */}
+              <motion.div
+                initial={{ x: '-150%', opacity: 0 }}
+                whileInView={{ x: '180%', opacity: [0, 0.75, 0.75, 0] }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.3, delay: 0.3, ease: [0.25, 1, 0.5, 1] }}
+                className="absolute inset-0 -skew-x-25 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent pointer-events-none z-20"
+              />
+              <div className="absolute inset-0 -translate-x-[200%] -skew-x-25 group-hover:translate-x-[250%] transition-transform duration-1000 ease-out bg-gradient-to-r from-transparent via-[#E5C4A8]/20 to-transparent pointer-events-none z-20" />
+
+              <div className="flex items-center justify-between pb-4 border-b border-white/10 relative z-10">
                 <span className="text-xs uppercase tracking-widest text-[#E5C4A8] font-semibold">
                   Сводка вашей записи
                 </span>
-                <span className="text-[11px] px-2 py-0.5 rounded-full bg-[#E5C4A8]/15 text-[#F5DFCB] border border-[#E5C4A8]/30 font-medium">
+                <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-[#E5C4A8]/15 text-[#F5DFCB] border border-[#E5C4A8]/30 font-medium">
                   Оплата после процедуры
                 </span>
               </div>
@@ -296,7 +363,14 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
 
                 <div className="flex justify-between items-center text-neutral-400">
                   <span>Мастер:</span>
-                  <span className="text-neutral-200">Вероника (Топ-мастер)</span>
+                  <div className="flex items-center gap-2">
+                    <img
+                      src="/veronika-master.png"
+                      alt="Мастер Вероника"
+                      className="w-5 h-5 rounded-full object-cover border border-[#E5C4A8]/40"
+                    />
+                    <span className="text-neutral-200">Вероника (Топ-мастер)</span>
+                  </div>
                 </div>
               </div>
 
@@ -315,24 +389,28 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
                 </div>
 
                 {/* WhatsApp Button */}
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   type="button"
                   onClick={handleOpenWhatsApp}
-                  className="w-full py-3.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20BD5A] text-white font-medium text-xs tracking-wider uppercase transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-[#25D366]/20 active:scale-98"
+                  className="w-full py-3.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20BD5A] text-white font-medium text-xs tracking-wider uppercase transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-[#25D366]/20"
                 >
                   <MessageCircle className="w-4 h-4" />
                   <span>Записаться через WhatsApp</span>
-                </button>
+                </motion.button>
 
                 {/* Telegram Button */}
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   type="button"
                   onClick={handleOpenTelegram}
-                  className="w-full py-3.5 px-4 rounded-xl bg-[#229ED9] hover:bg-[#1E8DC2] text-white font-medium text-xs tracking-wider uppercase transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-[#229ED9]/20 active:scale-98"
+                  className="w-full py-3.5 px-4 rounded-xl bg-[#229ED9] hover:bg-[#1E8DC2] text-white font-medium text-xs tracking-wider uppercase transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-[#229ED9]/20"
                 >
                   <Send className="w-4 h-4" />
                   <span>Записаться через Telegram</span>
-                </button>
+                </motion.button>
 
                 {/* Direct On-site confirmation */}
                 <button
@@ -343,9 +421,9 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
                   Оставить заявку на сайте (перезвоним за 5 мин)
                 </button>
               </div>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Confirmation Success Modal */}

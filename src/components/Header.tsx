@@ -18,18 +18,25 @@ export const Header: React.FC<HeaderProps> = ({ onOpenBooking }) => {
   }, []);
 
   const navLinks = [
-    { label: 'Услуги', href: '#services' },
+    { label: 'Услуги и цены', href: '#services' },
     { label: 'До / После', href: '#before-after' },
+    { label: 'Запись', href: '#booking' },
     { label: 'Стерильность', href: '#sterility' },
-    { label: 'Галерея', href: '#gallery' },
     { label: 'Контакты', href: '#contacts' },
   ];
 
   const handleNavClick = (href: string) => {
     setMobileMenuOpen(false);
-    const element = document.querySelector(href);
+    const targetId = href.replace('#', '');
+    const element = document.getElementById(targetId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const headerOffset = 76;
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = Math.max(0, elementPosition - headerOffset);
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
     }
   };
 
@@ -38,35 +45,39 @@ export const Header: React.FC<HeaderProps> = ({ onOpenBooking }) => {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'bg-[#0D0D11]/90 backdrop-blur-md border-b border-white/[0.08] shadow-lg shadow-black/40 py-3.5'
+            ? 'bg-[#0D0D11]/92 backdrop-blur-md border-b border-white/[0.08] shadow-lg shadow-black/40 py-3.5'
             : 'bg-transparent py-5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between gap-8">
+          <div className="flex items-center justify-between gap-6 sm:gap-8">
             {/* Zone 1: Single text element wordmark */}
             <a
               href="#"
-              className="text-lg md:text-xl font-serif tracking-widest text-white hover:text-[#E5C4A8] transition-colors whitespace-nowrap shrink-0 flex items-center gap-2 group"
+              onClick={(e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="group whitespace-nowrap shrink-0 flex items-center gap-2.5 transition-opacity hover:opacity-90"
             >
-              <span className="font-semibold tracking-[0.2em] text-[#F5DFCB] group-hover:text-white transition-colors">
+              <span className="font-display text-lg md:text-xl font-normal tracking-[0.28em] text-[#F5DFCB] group-hover:text-white transition-colors">
                 ПЕРЕМЕНА
               </span>
-              <span className="text-[#E5C4A8]/60 text-xs tracking-normal font-sans">
+              <span className="text-[#E5C4A8]/40 text-xs select-none">
                 ·
               </span>
-              <span className="text-xs tracking-[0.18em] text-[#E5C4A8] uppercase font-sans font-light">
+              <span className="font-sans text-[11px] md:text-xs tracking-[0.32em] text-[#E5C4A8] uppercase font-light">
                 ВЕРОНИКА
               </span>
             </a>
 
-            {/* Zone 2: Clean single-line text navigation links */}
-            <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-neutral-300">
+            {/* Zone 2: Clean single-line text navigation links without "Галерея" */}
+            <nav className="hidden lg:flex items-center gap-7 text-[12px] font-sans font-light tracking-[0.22em] text-neutral-300">
               {navLinks.map((link) => (
                 <button
                   key={link.href}
                   onClick={() => handleNavClick(link.href)}
-                  className="hover:text-[#E5C4A8] transition-colors whitespace-nowrap shrink-0 tracking-wide text-[13px] uppercase cursor-pointer"
+                  className="hover:text-[#E5C4A8] transition-all duration-300 whitespace-nowrap shrink-0 uppercase cursor-pointer hover:tracking-[0.26em]"
                 >
                   {link.label}
                 </button>
@@ -77,7 +88,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenBooking }) => {
             <div className="flex items-center gap-4 shrink-0">
               <a
                 href="tel:+79158850969"
-                className="hidden sm:flex items-center gap-2 text-xs text-neutral-300 hover:text-[#E5C4A8] transition-colors whitespace-nowrap"
+                className="hidden sm:flex items-center gap-2 text-xs font-sans tracking-wider font-light text-neutral-300 hover:text-[#E5C4A8] transition-colors whitespace-nowrap"
               >
                 <Phone className="w-3.5 h-3.5 text-[#E5C4A8]" />
                 <span className="tabular-nums">+7 (915) 885-09-69</span>
@@ -85,7 +96,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenBooking }) => {
 
               <button
                 onClick={onOpenBooking}
-                className="relative group overflow-hidden px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase text-[#0D0D11] bg-gradient-to-r from-[#E5C4A8] via-[#F5DFCB] to-[#E5C4A8] hover:shadow-[0_0_24px_rgba(229,196,168,0.4)] transition-all duration-300 whitespace-nowrap shrink-0 cursor-pointer active:scale-95"
+                className="relative group overflow-hidden px-5 py-2.5 rounded-full text-[11px] font-sans font-medium tracking-[0.18em] uppercase text-[#0D0D11] bg-gradient-to-r from-[#E5C4A8] via-[#F5DFCB] to-[#E5C4A8] shadow-[0_0_20px_rgba(229,196,168,0.25)] hover:shadow-[0_0_30px_rgba(229,196,168,0.45)] transition-all duration-300 whitespace-nowrap shrink-0 cursor-pointer active:scale-95"
               >
                 <span className="relative z-10 flex items-center gap-1.5">
                   <Calendar className="w-3.5 h-3.5" />
@@ -122,7 +133,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenBooking }) => {
               <button
                 key={link.href}
                 onClick={() => handleNavClick(link.href)}
-                className="text-left text-xl font-serif text-white hover:text-[#E5C4A8] transition-colors py-1"
+                className="text-left text-xl font-serif text-white hover:text-[#E5C4A8] transition-colors py-1 cursor-pointer"
               >
                 {link.label}
               </button>
@@ -145,7 +156,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenBooking }) => {
                 setMobileMenuOpen(false);
                 onOpenBooking();
               }}
-              className="w-full py-3.5 rounded-full text-center text-xs font-semibold tracking-wider uppercase text-[#0D0D11] bg-gradient-to-r from-[#E5C4A8] to-[#F5DFCB] shadow-[0_0_20px_rgba(229,196,168,0.3)]"
+              className="w-full py-3.5 rounded-full text-center text-xs font-semibold tracking-wider uppercase text-[#0D0D11] bg-gradient-to-r from-[#E5C4A8] to-[#F5DFCB] shadow-[0_0_20px_rgba(229,196,168,0.3)] cursor-pointer active:scale-95 transition-all"
             >
               Записаться онлайн
             </button>
