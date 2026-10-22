@@ -1,0 +1,6 @@
+{
+  "name": "Салон красоты Перемена | Ногтевая эстетика",
+  "description": "Премиум-маникюр и Smart-педикюр от топ-мастера Вероники в салоне красоты Перемена. Эстетика Clean Luxury, носка от 4 недель, 100% стерильность по СанПиН.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
